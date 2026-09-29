@@ -5,57 +5,97 @@
 
   <meta charset="UTF-8">
 
+  <!--
+  ==========================================================
+  PAGE TITLE
 
-  <!-- =====================================================
-       PAGE / BROWSER TAB TITLE
+  This appears in the browser tab.
 
-       CHANGE THIS if you want to rename the viewer.
+  CHANGE THIS if you want to rename the project.
+  ==========================================================
+  -->
 
-       This does NOT change the GitHub repository name.
-       ===================================================== -->
-
-  <title>Lough Ree 330 – 360° Heritage Survey</title>
-
-
-  <!-- =====================================================
-       PHOTO SPHERE VIEWER CSS
-
-       DO NOT normally change this.
-       ===================================================== -->
-
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/core/index.min.css">
+  <title>Lough Ree 330 – Digital Heritage Survey</title>
 
 
-  <!-- =====================================================
-       VIEWER SIZE
+  <!--
+  ==========================================================
+  BASIC PAGE STYLING
 
-       CHANGE THIS if you want to alter the size
-       of the 360° viewer.
-
-       100vh = full height of the browser window.
-       ===================================================== -->
+  You can change these later to alter the appearance.
+  ==========================================================
+  -->
 
   <style>
 
-    html, body {
+    body {
 
       margin: 0;
-      padding: 0;
 
-      width: 100%;
-      height: 100%;
+      font-family: Arial, sans-serif;
+
+      background: #f2f2f2;
+
+      color: #333;
 
     }
 
 
-    #viewer {
+    .header {
 
-      width: 100%;
+      background: #333;
 
-      /* CHANGE VIEWER HEIGHT HERE IF REQUIRED */
+      color: white;
 
-      height: 100vh;
+      padding: 40px;
+
+      text-align: center;
+
+    }
+
+
+    .content {
+
+      max-width: 900px;
+
+      margin: auto;
+
+      padding: 40px;
+
+      background: white;
+
+      min-height: 70vh;
+
+    }
+
+
+    h1 {
+
+      margin-top: 0;
+
+    }
+
+
+    .button {
+
+      display: inline-block;
+
+      padding: 12px 20px;
+
+      background: #333;
+
+      color: white;
+
+      text-decoration: none;
+
+      border-radius: 4px;
+
+    }
+
+
+    .button:hover {
+
+      background: #555;
 
     }
 
@@ -67,156 +107,68 @@
 <body>
 
 
-<!-- =====================================================
-     PHOTO SPHERE VIEWER CONTAINER
+<!-- ======================================================
+     PROJECT HEADER
+     ====================================================== -->
 
-     DO NOT change this unless you also change the
-     JavaScript below.
-     ===================================================== -->
+<div class="header">
 
-<div id="viewer"></div>
+  <h1>Lough Ree 330</h1>
 
+  <p>Digital Heritage Survey</p>
 
+</div>
 
-<!-- =====================================================
-     PHOTO SPHERE VIEWER LIBRARIES
 
-     DO NOT normally change these.
+<!-- ======================================================
+     MAIN CONTENT
+     ====================================================== -->
 
-     These load Three.js and Photo Sphere Viewer.
-     ===================================================== -->
+<div class="content">
 
-<script type="importmap">
+  <h2>About the Project</h2>
 
-{
-  "imports": {
+  <p>
 
-    "three":
-      "https://cdn.jsdelivr.net/npm/three/build/three.module.js",
+    Lough Ree 330 is a digital heritage survey documenting
+    archaeological and historic sites around Lough Ree.
 
-    "@photo-sphere-viewer/core":
-      "https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/core/index.module.js"
+  </p>
 
-  }
-}
+  <p>
 
-</script>
+    This site provides access to 360° photographic records
+    of selected locations.
 
+  </p>
 
 
-<script type="module">
+  <!-- ====================================================
+       EXAMPLE 360° VIEWER
 
+       This button opens one of the images.
 
-/* ========================================================
-   LOAD PHOTO SPHERE VIEWER
+       CHANGE THE SITE REFERENCE HERE if required.
 
-   DO NOT normally change this.
-   ======================================================== */
+       IMPORTANT:
+       The reference must match the image filename.
+       ==================================================== -->
 
-import { Viewer } from '@photo-sphere-viewer/core';
+  <p>
 
+    <a
+      class="button"
+      href="viewer.html?site=LF021-048006"
+    >
 
+      View 360° Example
 
-/* ========================================================
-   GET SITE NAME FROM THE URL
+    </a>
 
-   DO NOT normally change this.
+  </p>
 
-   Example:
 
-   viewer.html?site=LF021-048006
-
-   The code extracts:
-
-   LF021-048006
-   ======================================================== */
-
-const urlParams = new URLSearchParams(window.location.search);
-
-const site = urlParams.get('site');
-
-
-
-/* ========================================================
-   CHECK THAT A SITE NAME WAS PROVIDED
-   ======================================================== */
-
-if (!site) {
-
-  document.body.innerHTML = `
-
-    <div style="
-      font-family: Arial, sans-serif;
-      padding: 40px;
-      text-align: center;
-    ">
-
-      <h2>Lough Ree 330 – 360° Viewer</h2>
-
-      <p>
-        No site was specified.
-      </p>
-
-      <p>
-        Please provide a site reference in the URL.
-      </p>
-
-    </div>
-
-  `;
-
-  throw new Error('No site specified');
-
-}
-
-
-
-/* ========================================================
-   CREATE THE IMAGE PATH
-
-   ========================================================
-
-   THIS IS THE IMPORTANT PART.
-
-   The code automatically takes the site reference
-   from the URL and adds:
-
-       images/
-       .jpg
-
-   For example:
-
-       LF021-048006
-
-   becomes:
-
-       images/LF021-048006.jpg
-
-   Therefore you do NOT need to add every image
-   manually to this script.
-
-   ======================================================== */
-
-const imagePath = 'images/' + site + '.jpg';
-
-
-
-/* ========================================================
-   CREATE THE 360° VIEWER
-
-   DO NOT normally change this section.
-   ======================================================== */
-
-const viewer = new Viewer({
-
-  container: document.querySelector('#viewer'),
-
-  panorama: imagePath
-
-});
-
-
-</script>
+</div>
 
 
 </body>
