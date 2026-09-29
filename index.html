@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <!-- =====================================================
+       RESPONSIVE DISPLAY
+
+       Normally DO NOT change this.
+       ===================================================== -->
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+  <!-- =====================================================
+       PAGE / BROWSER TAB TITLE
+
+       CHANGE THIS if you want to rename the viewer.
+
+       Example:
+       <title>Inchcleraun – 360° Survey</title>
+       ===================================================== -->
+
+  <title>Lough Ree 330 – 360° Heritage Survey</title>
+
+
+  <!-- =====================================================
+       PHOTO SPHERE VIEWER CSS
+
+       DO NOT normally change this.
+       This loads the Photo Sphere Viewer software.
+       ===================================================== -->
+
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/core/index.min.css">
+
+
+  <!-- =====================================================
+       VIEWER SIZE
+
+       CHANGE THESE if you want to alter the size
+       or position of the viewer.
+
+       100% width = entire browser width
+       100vh = entire browser height
+       ===================================================== -->
+
+  <style>
+
+    html, body {
+
+      margin: 0;
+      padding: 0;
+
+      width: 100%;
+      height: 100%;
+
+    }
+
+
+    #viewer {
+
+      width: 100%;
+
+      /* CHANGE VIEWER HEIGHT HERE IF REQUIRED */
+
+      height: 100vh;
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     PHOTO SPHERE VIEWER CONTAINER
+
+     DO NOT change this ID unless you also change the
+     JavaScript below.
+     ===================================================== -->
+
+<div id="viewer"></div>
+
+
+
+<!-- =====================================================
+     PHOTO SPHERE VIEWER LIBRARIES
+
+     DO NOT normally change these.
+
+     These tell the page where to get:
+     - Three.js
+     - Photo Sphere Viewer
+     ===================================================== -->
+
+<script type="importmap">
+
+{
+  "imports": {
+
+    "three":
+      "https://cdn.jsdelivr.net/npm/three/build/three.module.js",
+
+    "@photo-sphere-viewer/core":
+      "https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/core/index.module.js"
+
+  }
+}
+
+</script>
+
+
+
+<script type="module">
+
+
+/* ========================================================
+   LOAD PHOTO SPHERE VIEWER
+
+   DO NOT normally change this.
+   ======================================================== */
+
+import { Viewer } from '@photo-sphere-viewer/core';
+
+
+
+/* ========================================================
+   READ THE SITE NAME FROM THE URL
+
+   DO NOT normally change this.
+
+   Example URL:
+
+   viewer.html?site=inchclearn
+
+   The code reads "inchclearn" and uses it to find
+   the correct image below.
+   ======================================================== */
+
+const urlParams = new URLSearchParams(window.location.search);
+
+const site = urlParams.get('site');
+
+
+
+/* ========================================================
+   IMAGE DATABASE
+   ========================================================
+
+   THIS IS ONE OF THE MAIN SECTIONS YOU WILL CHANGE.
+
+   Add your 360° images here.
+
+   FORMAT:
+
+   site-name: 'images/filename.jpg',
+
+   The name on the LEFT:
+
+       is used in the URL
+
+   The filename on the RIGHT:
+
+       must exactly match the image in the /images/
+       folder.
+
+   ======================================================== */
+
+const images = {
+
+
+  /* ------------------------------------------------------
+     SITE 1
+
+     URL:
+     viewer.html?site=inchclearn
+
+     IMAGE:
+     images/Inchclearn_LF021-048006.jpg
+     ------------------------------------------------------ */
+
+  inchclearn: 'images/Inchclearn_LF021-048006.jpg',
+
+
+  /* ------------------------------------------------------
+     SITE 2
+
+     Change this site name and image filename.
+     ------------------------------------------------------ */
+
+  site02: 'images/Site02.jpg',
+
+
+  /* ------------------------------------------------------
+     SITE 3
+     ------------------------------------------------------ */
+
+  site03: 'images/Site03.jpg',
+
+
+  /* ------------------------------------------------------
+     SITE 4
+     ------------------------------------------------------ */
+
+  site04: 'images/Site04.jpg'
+
+
+  /* ======================================================
+     ADD MORE SITES ABOVE THIS LINE.
+
+     Example:
+
+     kilmore: 'images/Kilmore.jpg',
+
+     The final entry does NOT need a comma.
+
+     ====================================================== */
+
+};
+
+
+
+/* ========================================================
+   CHECK WHETHER THE REQUESTED SITE EXISTS
+
+   DO NOT change this section.
+   ======================================================== */
+
+if (!images[site]) {
+
+
+  /* ------------------------------------------------------
+     ERROR MESSAGE
+
+     You CAN change this wording if you want.
+     ------------------------------------------------------ */
+
+  document.body.innerHTML = `
+
+    <div style="
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      text-align: center;
+    ">
+
+      <h2>360° image not found</h2>
+
+      <p>
+        The requested site does not exist.
+      </p>
+
+    </div>
+
+  `;
+
+
+  throw new Error(
+    '360° image not found: ' + site
+  );
+
+}
+
+
+
+/* ========================================================
+   CREATE THE 360° VIEWER
+
+   DO NOT normally change this section.
+   ======================================================== */
+
+const viewer = new Viewer({
+
+  /* ------------------------------------------------------
+     VIEWER LOCATION
+
+     DO NOT change unless you also change the HTML above.
+     ------------------------------------------------------ */
+
+  container: document.querySelector('#viewer'),
+
+
+  /* ------------------------------------------------------
+     SELECT IMAGE
+
+     DO NOT change this.
+
+     The code automatically selects the image from the
+     "images" database above.
+     ------------------------------------------------------ */
+
+  panorama: images[site]
+
+});
+
+
+</script>
+
+
+</body>
+
+</html>
