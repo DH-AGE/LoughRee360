@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <!--
+  ==========================================================
+  PAGE / BROWSER TAB TITLE
+
+  CHANGE THIS if you want to rename the viewer.
+  ==========================================================
+  -->
+
+  <title>Lough Ree 330 – 360° Heritage Survey</title>
+
+
+  <!-- PHOTO SPHERE VIEWER CSS -->
+
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/core/index.min.css"
+  >
+
+
+  <!--
+  ==========================================================
+  VIEWER SIZE
+
+  100vh = 100% of the browser window height.
+
+  CHANGE height here if you want a smaller viewer.
+
+  For example:
+
+      height: 600px;
+
+  ==========================================================
+  -->
+
+  <style>
+
+    html, body {
+
+      margin: 0;
+      padding: 0;
+
+      width: 100%;
+      height: 100%;
+
+    }
+
+
+    #viewer {
+
+      width: 100%;
+
+      height: 100vh;
+
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ======================================================
+     360° VIEWER
+
+     Do not normally change this.
+     ====================================================== -->
+
+<div id="viewer"></div>
+
+
+
+<!-- ======================================================
+     PHOTO SPHERE VIEWER LIBRARIES
+
+     These are loaded from jsDelivr.
+
+     Do not normally change these.
+     ====================================================== -->
+
+<script type="importmap">
+
+{
+
+  "imports": {
+
+    "three":
+      "https://cdn.jsdelivr.net/npm/three/build/three.module.js",
+
+    "@photo-sphere-viewer/core":
+      "https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/core/index.module.js"
+
+  }
+
+}
+
+</script>
+
+
+
+<script type="module">
+
+
+/* ========================================================
+   LOAD PHOTO SPHERE VIEWER
+   ======================================================== */
+
+import {
+  Viewer
+} from '@photo-sphere-viewer/core';
+
+
+
+/* ========================================================
+   READ THE SITE REFERENCE FROM THE URL
+
+   Example:
+
+   viewer.html?site=LF021-048006
+
+   gives us:
+
+   LF021-048006
+
+   ======================================================== */
+
+const urlParams =
+  new URLSearchParams(window.location.search);
+
+const site =
+  urlParams.get('site');
+
+
+
+/* ========================================================
+   CHECK THAT A SITE WAS PROVIDED
+   ======================================================== */
+
+if (!site) {
+
+  document.body.innerHTML = `
+
+    <div style="
+      font-family: Arial, sans-serif;
+      padding: 40px;
+      text-align: center;
+    ">
+
+      <h2>Lough Ree 330</h2>
+
+      <p>
+        No site was specified.
+      </p>
+
+      <p>
+        Please provide a site reference in the URL.
+      </p>
+
+    </div>
+
+  `;
+
+  throw new Error('No site specified');
+
+}
+
+
+
+/* ========================================================
+   CREATE THE IMAGE PATH
+
+   This is the key part of the system.
+
+   If the URL contains:
+
+       LF021-048006
+
+   the code automatically looks for:
+
+       images/LF021-048006.jpg
+
+   ======================================================== */
+
+const imagePath =
+  'images/' + site + '.jpg';
+
+
+
+/* ========================================================
+   CREATE THE 360° VIEWER
+   ======================================================== */
+
+const viewer = new Viewer({
+
+  container:
+    document.querySelector('#viewer'),
+
+  panorama:
+    imagePath
+
+});
+
+
+</script>
+
+
+</body>
+
+</html>
