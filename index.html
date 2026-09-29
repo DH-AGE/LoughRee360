@@ -5,22 +5,13 @@
 
   <meta charset="UTF-8">
 
-  <!-- =====================================================
-       RESPONSIVE DISPLAY
-
-       Normally DO NOT change this.
-       ===================================================== -->
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 
   <!-- =====================================================
        PAGE / BROWSER TAB TITLE
 
        CHANGE THIS if you want to rename the viewer.
 
-       Example:
-       <title>Inchcleraun – 360° Survey</title>
+       This does NOT change the GitHub repository name.
        ===================================================== -->
 
   <title>Lough Ree 330 – 360° Heritage Survey</title>
@@ -30,7 +21,6 @@
        PHOTO SPHERE VIEWER CSS
 
        DO NOT normally change this.
-       This loads the Photo Sphere Viewer software.
        ===================================================== -->
 
   <link rel="stylesheet"
@@ -40,11 +30,10 @@
   <!-- =====================================================
        VIEWER SIZE
 
-       CHANGE THESE if you want to alter the size
-       or position of the viewer.
+       CHANGE THIS if you want to alter the size
+       of the 360° viewer.
 
-       100% width = entire browser width
-       100vh = entire browser height
+       100vh = full height of the browser window.
        ===================================================== -->
 
   <style>
@@ -81,7 +70,7 @@
 <!-- =====================================================
      PHOTO SPHERE VIEWER CONTAINER
 
-     DO NOT change this ID unless you also change the
+     DO NOT change this unless you also change the
      JavaScript below.
      ===================================================== -->
 
@@ -94,9 +83,7 @@
 
      DO NOT normally change these.
 
-     These tell the page where to get:
-     - Three.js
-     - Photo Sphere Viewer
+     These load Three.js and Photo Sphere Viewer.
      ===================================================== -->
 
 <script type="importmap">
@@ -131,16 +118,17 @@ import { Viewer } from '@photo-sphere-viewer/core';
 
 
 /* ========================================================
-   READ THE SITE NAME FROM THE URL
+   GET SITE NAME FROM THE URL
 
    DO NOT normally change this.
 
-   Example URL:
+   Example:
 
-   viewer.html?site=inchclearn
+   viewer.html?site=LF021-048006
 
-   The code reads "inchclearn" and uses it to find
-   the correct image below.
+   The code extracts:
+
+   LF021-048006
    ======================================================== */
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -150,96 +138,10 @@ const site = urlParams.get('site');
 
 
 /* ========================================================
-   IMAGE DATABASE
-   ========================================================
-
-   THIS IS ONE OF THE MAIN SECTIONS YOU WILL CHANGE.
-
-   Add your 360° images here.
-
-   FORMAT:
-
-   site-name: 'images/filename.jpg',
-
-   The name on the LEFT:
-
-       is used in the URL
-
-   The filename on the RIGHT:
-
-       must exactly match the image in the /images/
-       folder.
-
+   CHECK THAT A SITE NAME WAS PROVIDED
    ======================================================== */
 
-const images = {
-
-
-  /* ------------------------------------------------------
-     SITE 1
-
-     URL:
-     viewer.html?site=inchclearn
-
-     IMAGE:
-     images/Inchclearn_LF021-048006.jpg
-     ------------------------------------------------------ */
-
-  inchclearn: 'images/Inchclearn_LF021-048006.jpg',
-
-
-  /* ------------------------------------------------------
-     SITE 2
-
-     Change this site name and image filename.
-     ------------------------------------------------------ */
-
-  site02: 'images/Site02.jpg',
-
-
-  /* ------------------------------------------------------
-     SITE 3
-     ------------------------------------------------------ */
-
-  site03: 'images/Site03.jpg',
-
-
-  /* ------------------------------------------------------
-     SITE 4
-     ------------------------------------------------------ */
-
-  site04: 'images/Site04.jpg'
-
-
-  /* ======================================================
-     ADD MORE SITES ABOVE THIS LINE.
-
-     Example:
-
-     kilmore: 'images/Kilmore.jpg',
-
-     The final entry does NOT need a comma.
-
-     ====================================================== */
-
-};
-
-
-
-/* ========================================================
-   CHECK WHETHER THE REQUESTED SITE EXISTS
-
-   DO NOT change this section.
-   ======================================================== */
-
-if (!images[site]) {
-
-
-  /* ------------------------------------------------------
-     ERROR MESSAGE
-
-     You CAN change this wording if you want.
-     ------------------------------------------------------ */
+if (!site) {
 
   document.body.innerHTML = `
 
@@ -249,22 +151,53 @@ if (!images[site]) {
       text-align: center;
     ">
 
-      <h2>360° image not found</h2>
+      <h2>Lough Ree 330 – 360° Viewer</h2>
 
       <p>
-        The requested site does not exist.
+        No site was specified.
+      </p>
+
+      <p>
+        Please provide a site reference in the URL.
       </p>
 
     </div>
 
   `;
 
-
-  throw new Error(
-    '360° image not found: ' + site
-  );
+  throw new Error('No site specified');
 
 }
+
+
+
+/* ========================================================
+   CREATE THE IMAGE PATH
+
+   ========================================================
+
+   THIS IS THE IMPORTANT PART.
+
+   The code automatically takes the site reference
+   from the URL and adds:
+
+       images/
+       .jpg
+
+   For example:
+
+       LF021-048006
+
+   becomes:
+
+       images/LF021-048006.jpg
+
+   Therefore you do NOT need to add every image
+   manually to this script.
+
+   ======================================================== */
+
+const imagePath = 'images/' + site + '.jpg';
 
 
 
@@ -276,25 +209,9 @@ if (!images[site]) {
 
 const viewer = new Viewer({
 
-  /* ------------------------------------------------------
-     VIEWER LOCATION
-
-     DO NOT change unless you also change the HTML above.
-     ------------------------------------------------------ */
-
   container: document.querySelector('#viewer'),
 
-
-  /* ------------------------------------------------------
-     SELECT IMAGE
-
-     DO NOT change this.
-
-     The code automatically selects the image from the
-     "images" database above.
-     ------------------------------------------------------ */
-
-  panorama: images[site]
+  panorama: imagePath
 
 });
 
